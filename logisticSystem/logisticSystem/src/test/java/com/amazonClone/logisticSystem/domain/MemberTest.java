@@ -20,7 +20,7 @@ import static org.mockito.Mockito.doReturn;
 public class MemberTest {
 
     @Mock
-    JpaMemberRepository memberRepository;
+    private JpaMemberRepository memberRepository;
 
     @InjectMocks
     private MemberServiceImpl memberService;
@@ -47,4 +47,5 @@ public class MemberTest {
         //then
         Assertions.assertEquals("이미 존재하는 이메일 입니다.", thrown.getMessage());
     }
+
 }

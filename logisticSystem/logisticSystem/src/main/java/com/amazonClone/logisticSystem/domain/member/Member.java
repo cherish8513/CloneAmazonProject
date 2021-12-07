@@ -1,6 +1,7 @@
 package com.amazonClone.logisticSystem.domain.member;
 
 import com.amazonClone.logisticSystem.domain.util.Address;
+import com.amazonClone.logisticSystem.domain.util.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -33,8 +34,6 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
-    private LocalDateTime joinDate;
-
     @Builder
     public Member(String name, String email, String password, Address address, MemberRole role) {
         this.name = name;
@@ -42,7 +41,6 @@ public class Member {
         this.password = password;
         this.address = address;
         this.role = role;
-        this.joinDate = LocalDateTime.now();
     }
 
     public Member changePassword(String password){

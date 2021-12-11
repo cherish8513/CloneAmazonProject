@@ -1,10 +1,7 @@
 package com.amazonClone.logisticSystem.service.member;
 
-import com.amazonClone.logisticSystem.domain.member.Member;
-import com.amazonClone.logisticSystem.dto.member.ChangeRequestDto;
-import com.amazonClone.logisticSystem.dto.member.SaveRequestDto;
-
-import java.util.Optional;
+import com.amazonClone.logisticSystem.dto.member.request.ChangeRequestDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveRequestDto;
 
 public interface MemberService {
     public Long join(SaveRequestDto requestDto);

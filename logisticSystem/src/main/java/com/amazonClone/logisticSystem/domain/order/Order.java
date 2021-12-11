@@ -5,6 +5,7 @@ import com.amazonClone.logisticSystem.domain.delivery.DeliveryStatus;
 import com.amazonClone.logisticSystem.domain.member.Member;
 import com.amazonClone.logisticSystem.domain.orderItem.OrderItem;
 import com.amazonClone.logisticSystem.domain.util.BaseTimeEntity;
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@QueryEntity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Table(name = "orders")
 public class Order extends BaseTimeEntity {
 
     @Id @GeneratedValue
@@ -24,41 +27,28 @@ public class Order extends BaseTimeEntity {
     private Long id;
 
     private OrderStatus status;
-
+  
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @OneToMany(mappedBy = "order")
+  
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Delivery> deliveries = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
     @Builder
-    public Order(Member member, List<OrderItem> orderItems, List<Delivery> deliveries) {
+    public Order(Member member) {
         this.member = member;
-        addOrderItem(orderItems);
-        addDelivery(deliveries);
         changeStatus(OrderStatus.BEFORE_RECEPTION);
     }
 
     public void changeStatus(OrderStatus status){
         this.status = status;
-    }
-
-    public void addOrderItem(List<OrderItem> orderItems){
-        for (OrderItem orderItem: orderItems) {
-            this.orderItems.add(orderItem);
-            orderItem.changeOrder(this);
-        }
-    }
-
-    public void addDelivery(List<Delivery> deliveries){
-        for (Delivery delivery: deliveries) {
-            this.deliveries.add(delivery);
-            delivery.changeOrder(this);
-        }
     }
 
     public void cancel(){

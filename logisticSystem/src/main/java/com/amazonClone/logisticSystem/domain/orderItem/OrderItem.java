@@ -31,16 +31,20 @@ public class OrderItem extends BaseTimeEntity {
     private int orderPrice;
 
     @Builder
-    public OrderItem(Item item, int count) {
+    public OrderItem(Item item, int count, Order order) {
         this.item = item;
         this.count = count;
         orderPrice = item.getPrice();
+        if(order != null){
+            changeOrder(order);
+        }
     }
 
     private int count;
 
     public void changeOrder(Order order) {
         this.order = order;
+        order.getOrderItems().add(this);
     }
 
     public void cancel() {

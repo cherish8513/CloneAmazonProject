@@ -3,6 +3,8 @@ package com.amazonClone.logisticSystem.domain.delivery;
 import com.amazonClone.logisticSystem.domain.order.Order;
 import com.amazonClone.logisticSystem.domain.util.Address;
 import com.amazonClone.logisticSystem.domain.util.BaseTimeEntity;
+import com.querydsl.core.annotations.QueryEntity;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +14,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@QueryEntity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Delivery extends BaseTimeEntity {
@@ -28,6 +31,7 @@ public class Delivery extends BaseTimeEntity {
     @Embedded
     Address address;
 
+    @Enumerated(EnumType.STRING)
     DeliveryStatus status;
 
     LocalDateTime sendDate;
@@ -35,11 +39,15 @@ public class Delivery extends BaseTimeEntity {
     LocalDateTime receiveDate;
 
     @Builder
-    public Delivery(Address address) {
+    public Delivery(Address address, Order order) {
         this.address = address;
+        if(order != null){
+            changeOrder(order);
+        }
     }
 
     public void changeOrder(Order order) {
         this.order = order;
+        order.getDeliveries().add(this);
     }
 }

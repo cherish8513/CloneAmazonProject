@@ -1,8 +1,8 @@
 package com.amazonClone.logisticSystem.service.member;
 
 import com.amazonClone.logisticSystem.domain.member.Member;
-import com.amazonClone.logisticSystem.dto.member.SaveRequestDto;
-import com.amazonClone.logisticSystem.dto.member.ChangeRequestDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveRequestDto;
+import com.amazonClone.logisticSystem.dto.member.request.ChangeRequestDto;
 import com.amazonClone.logisticSystem.repository.member.JpaMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
     private final JpaMemberRepository memberRepository;
 
     @Override

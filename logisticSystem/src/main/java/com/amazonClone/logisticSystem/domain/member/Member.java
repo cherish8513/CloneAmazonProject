@@ -1,7 +1,9 @@
 package com.amazonClone.logisticSystem.domain.member;
 
+import com.amazonClone.logisticSystem.domain.order.Order;
 import com.amazonClone.logisticSystem.domain.util.Address;
 import com.amazonClone.logisticSystem.domain.util.BaseTimeEntity;
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,8 +11,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@QueryEntity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity {

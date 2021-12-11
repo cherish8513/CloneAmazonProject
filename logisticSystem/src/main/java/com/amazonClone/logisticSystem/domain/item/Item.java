@@ -31,6 +31,7 @@ public class Item extends BaseTimeEntity {
 
     private int stockQuantity;
 
+    @OneToMany(mappedBy = "item")
     private List<CategoryItem> categories = new ArrayList<>();
 
     @Builder

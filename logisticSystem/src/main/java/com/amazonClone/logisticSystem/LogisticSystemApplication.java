@@ -15,7 +15,7 @@ public class LogisticSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LogisticSystemApplication.class, args);
 	}
-
+  
 	@Bean
 	JPAQueryFactory jpaQueryFactory(EntityManager em){
 		return new JPAQueryFactory(em);

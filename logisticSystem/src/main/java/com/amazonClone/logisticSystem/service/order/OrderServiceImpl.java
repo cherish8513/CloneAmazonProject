@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
 
         return saveOrder.getId();
     }
-
+  
     @Override
     public void cancelOrder(Long orderId) {
         Order order = getOrder(orderRepository.findById(orderId));
@@ -99,5 +99,4 @@ public class OrderServiceImpl implements OrderService {
     private Order getOrder(Optional<Order> byId){
         return byId.orElseThrow(() -> new IllegalArgumentException("없는 주문 입니다"));
     }
-
 }

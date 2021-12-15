@@ -7,14 +7,12 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class OrderQueryRepositoryImpl implements OrderQueryRepository{
 
-    private final EntityManager em;
     private final JPAQueryFactory query;
     private final QMember member = new QMember("member1");
     private final QOrder order = new QOrder("order1");

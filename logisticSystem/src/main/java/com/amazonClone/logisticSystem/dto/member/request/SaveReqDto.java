@@ -7,11 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
-public class SaveRequestDto {
+public class SaveReqDto {
     private String name;
     private String email;
     private String password;
@@ -19,7 +17,7 @@ public class SaveRequestDto {
     private MemberRole role;
 
     @Builder
-    public SaveRequestDto(String name, String email, String password, Address address, MemberRole role) {
+    public SaveReqDto(String name, String email, String password, Address address, MemberRole role) {
         this.name = name;
         this.email = email;
         this.password = password;

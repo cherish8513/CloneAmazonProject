@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ChangeRequestDto {
+public class ChangeReqDto {
     String email;
     String password;
 
     @Builder
-    public ChangeRequestDto(String email, String password) {
+    public ChangeReqDto(String email, String password) {
         this.email = email;
         this.password = password;
     }

@@ -3,6 +3,7 @@ package com.amazonClone.logisticSystem.domain.item;
 import com.amazonClone.logisticSystem.domain.categoryItem.CategoryItem;
 import com.amazonClone.logisticSystem.domain.util.Address;
 import com.amazonClone.logisticSystem.domain.util.BaseTimeEntity;
+import com.querydsl.core.annotations.QueryEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@QueryEntity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Item extends BaseTimeEntity {

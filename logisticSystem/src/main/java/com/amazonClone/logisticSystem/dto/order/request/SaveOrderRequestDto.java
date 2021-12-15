@@ -1,7 +1,6 @@
 package com.amazonClone.logisticSystem.dto.order.request;
 
 import com.amazonClone.logisticSystem.domain.util.Address;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

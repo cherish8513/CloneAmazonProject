@@ -1,11 +1,8 @@
 package com.amazonClone.logisticSystem.dto.order.response;
 
-import com.amazonClone.logisticSystem.domain.delivery.Delivery;
 import com.amazonClone.logisticSystem.domain.order.Order;
 import com.amazonClone.logisticSystem.domain.order.OrderStatus;
 import com.amazonClone.logisticSystem.domain.util.Address;
-import com.querydsl.core.annotations.QueryProjection;
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;

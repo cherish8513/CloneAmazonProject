@@ -1,8 +1,8 @@
 package com.amazonClone.logisticSystem.service.member;
 
 import com.amazonClone.logisticSystem.domain.member.Member;
-import com.amazonClone.logisticSystem.dto.member.request.SaveRequestDto;
-import com.amazonClone.logisticSystem.dto.member.request.ChangeRequestDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveReqDto;
+import com.amazonClone.logisticSystem.dto.member.request.ChangeReqDto;
 import com.amazonClone.logisticSystem.repository.member.JpaMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,21 +18,21 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public Long join(SaveRequestDto requestDto) {
+    public Long join(SaveReqDto requestDto) {
         validateDuplicate(requestDto);
         return memberRepository.save(requestDto.toEntity()).getId();
     }
 
     @Override
     @Transactional
-    public Long changePassword(ChangeRequestDto requestDto) {
+    public Long changePassword(ChangeReqDto requestDto) {
         Member findMember = getMember(memberRepository.findByEmail(requestDto.getEmail()));
         findMember.changePassword(requestDto.getPassword());
         return findMember.getId();
     }
 
     // 중복 회원 검사
-    private void validateDuplicate(SaveRequestDto requestDto){
+    private void validateDuplicate(SaveReqDto requestDto){
         memberRepository.findByEmail(requestDto.getEmail())
                 .ifPresent(member -> {
                     throw new IllegalStateException("이미 존재하는 이메일 입니다.");

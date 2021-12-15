@@ -4,7 +4,7 @@ package com.amazonClone.logisticSystem.service;
 import com.amazonClone.logisticSystem.domain.item.Item;
 import com.amazonClone.logisticSystem.domain.member.MemberRole;
 import com.amazonClone.logisticSystem.domain.util.Address;
-import com.amazonClone.logisticSystem.dto.member.request.SaveRequestDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveReqDto;
 import com.amazonClone.logisticSystem.dto.order.request.SaveOrderRequestDto;
 import com.amazonClone.logisticSystem.repository.item.JpaItemRepository;
 import com.amazonClone.logisticSystem.dto.order.response.FindOrdersResDto;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,7 +93,7 @@ public class OrderServiceIntegralTest {
     }
 
     private void createMember(String email) {
-        SaveRequestDto requestDto = SaveRequestDto.builder()
+        SaveReqDto requestDto = SaveReqDto.builder()
                 .name("이명범")
                 .email(email)
                 .password("password")

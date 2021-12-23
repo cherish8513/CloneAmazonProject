@@ -25,8 +25,6 @@ public class Order extends BaseTimeEntity {
     @Id @GeneratedValue
     @Column(name = "order_id")
     private Long id;
-
-    private OrderStatus status;
   
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

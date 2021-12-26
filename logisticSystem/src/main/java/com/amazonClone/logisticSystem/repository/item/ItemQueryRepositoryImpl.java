@@ -1,9 +1,8 @@
 package com.amazonClone.logisticSystem.repository.item;
 
-import com.amazonClone.logisticSystem.dto.Item.FindItemResDto;
+import com.amazonClone.logisticSystem.dto.Item.response.FindItemResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

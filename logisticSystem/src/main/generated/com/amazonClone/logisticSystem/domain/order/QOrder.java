@@ -27,7 +27,7 @@ public class QOrder extends EntityPathBase<Order> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final ListPath<com.amazonClone.logisticSystem.domain.delivery.Delivery, SimplePath<com.amazonClone.logisticSystem.domain.delivery.Delivery>> deliveries = this.<com.amazonClone.logisticSystem.domain.delivery.Delivery, SimplePath<com.amazonClone.logisticSystem.domain.delivery.Delivery>>createList("deliveries", com.amazonClone.logisticSystem.domain.delivery.Delivery.class, SimplePath.class, PathInits.DIRECT2);
+    public final ListPath<com.amazonClone.logisticSystem.domain.delivery.Delivery, com.amazonClone.logisticSystem.domain.delivery.QDelivery> deliveries = this.<com.amazonClone.logisticSystem.domain.delivery.Delivery, com.amazonClone.logisticSystem.domain.delivery.QDelivery>createList("deliveries", com.amazonClone.logisticSystem.domain.delivery.Delivery.class, com.amazonClone.logisticSystem.domain.delivery.QDelivery.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

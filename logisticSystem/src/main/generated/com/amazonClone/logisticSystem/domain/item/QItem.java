@@ -18,6 +18,8 @@ public class QItem extends EntityPathBase<Item> {
 
     private static final long serialVersionUID = 660137665L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QItem item = new QItem("item");
 
     public final com.amazonClone.logisticSystem.domain.util.QBaseTimeEntity _super = new com.amazonClone.logisticSystem.domain.util.QBaseTimeEntity(this);
@@ -38,18 +40,29 @@ public class QItem extends EntityPathBase<Item> {
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
 
+    public final com.amazonClone.logisticSystem.domain.member.QMember seller;
+
     public final NumberPath<Integer> stockQuantity = createNumber("stockQuantity", Integer.class);
 
     public QItem(String variable) {
-        super(Item.class, forVariable(variable));
+        this(Item.class, forVariable(variable), INITS);
     }
 
     public QItem(Path<? extends Item> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QItem(PathMetadata metadata) {
-        super(Item.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QItem(PathMetadata metadata, PathInits inits) {
+        this(Item.class, metadata, inits);
+    }
+
+    public QItem(Class<? extends Item> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.seller = inits.isInitialized("seller") ? new com.amazonClone.logisticSystem.domain.member.QMember(forProperty("seller")) : null;
     }
 
 }

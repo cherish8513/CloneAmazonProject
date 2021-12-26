@@ -1,9 +1,10 @@
 package com.amazonClone.logisticSystem.service.member;
 
 import com.amazonClone.logisticSystem.domain.member.Member;
-import com.amazonClone.logisticSystem.dto.member.request.SaveReqDto;
-import com.amazonClone.logisticSystem.dto.member.request.ChangeReqDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveMemberReqDto;
+import com.amazonClone.logisticSystem.dto.member.request.ChangeMemberReqDto;
 import com.amazonClone.logisticSystem.repository.member.JpaMemberRepository;
+import com.amazonClone.logisticSystem.service.util.ValidationCheck;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,32 +16,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final JpaMemberRepository memberRepository;
+    private final ValidationCheck validationCheck;
 
     @Override
     @Transactional
-    public Long join(SaveReqDto requestDto) {
-        validateDuplicate(requestDto);
+    public Long join(SaveMemberReqDto requestDto) {
+        validationCheck.validateDuplicate(memberRepository.findByEmail(requestDto.getEmail()));
         return memberRepository.save(requestDto.toEntity()).getId();
     }
 
     @Override
     @Transactional
-    public Long changePassword(ChangeReqDto requestDto) {
-        Member findMember = getMember(memberRepository.findByEmail(requestDto.getEmail()));
+    public Long changePassword(ChangeMemberReqDto requestDto) {
+        Member findMember = validationCheck.getMember(memberRepository.findByEmail(requestDto.getEmail()));
         findMember.changePassword(requestDto.getPassword());
         return findMember.getId();
-    }
-
-    // 중복 회원 검사
-    private void validateDuplicate(SaveReqDto requestDto){
-        memberRepository.findByEmail(requestDto.getEmail())
-                .ifPresent(member -> {
-                    throw new IllegalStateException("이미 존재하는 이메일 입니다.");
-                });
-    }
-
-    // 유효한 회원인지 검증
-    private Member getMember(Optional<Member> byEmail) {
-        return byEmail.orElseThrow(() -> new IllegalArgumentException("없는 회원 입니다"));
     }
 }

@@ -4,11 +4,12 @@ import com.amazonClone.logisticSystem.domain.item.Item;
 import com.amazonClone.logisticSystem.domain.member.Member;
 import com.amazonClone.logisticSystem.domain.order.Order;
 import com.amazonClone.logisticSystem.domain.util.Address;
-import com.amazonClone.logisticSystem.dto.order.request.SaveOrderRequestDto;
+import com.amazonClone.logisticSystem.dto.order.request.SaveOrderReqDto;
 import com.amazonClone.logisticSystem.repository.item.JpaItemRepository;
 import com.amazonClone.logisticSystem.repository.member.JpaMemberRepository;
 import com.amazonClone.logisticSystem.repository.order.JpaOrderRepository;
 import com.amazonClone.logisticSystem.service.order.OrderServiceImpl;
+import com.amazonClone.logisticSystem.service.util.ValidationCheck;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceUnitTest {
 
@@ -32,6 +34,8 @@ public class OrderServiceUnitTest {
     private JpaItemRepository itemRepository;
     @Mock
     private JpaOrderRepository orderRepository;
+    @Mock
+    private ValidationCheck validationCheck;
 
     @InjectMocks
     private OrderServiceImpl orderService;
@@ -63,7 +67,7 @@ public class OrderServiceUnitTest {
         addresses.add(new Address("1", "2", "3"));
         addresses.add(new Address("4", "5", "6"));
 
-        SaveOrderRequestDto requestDto = SaveOrderRequestDto.builder()
+        SaveOrderReqDto requestDto = SaveOrderReqDto.builder()
                 .addresses(addresses)
                 .items(items)
                 .memberId(1L)
@@ -73,6 +77,9 @@ public class OrderServiceUnitTest {
         when(itemRepository.findById(1L)).thenReturn(Optional.of(item1));
         when(itemRepository.findById(2L)).thenReturn(Optional.of(item2));
         when(orderRepository.save(any(Order.class))).then(AdditionalAnswers.returnsFirstArg());
+        when(validationCheck.getMember(Optional.of(member))).thenReturn(member);
+        when(validationCheck.getItem(Optional.of(item1))).thenReturn(item1);
+        when(validationCheck.getItem(Optional.of(item2))).thenReturn(item2);
 
         //when
         Long orderId = orderService.order(requestDto);

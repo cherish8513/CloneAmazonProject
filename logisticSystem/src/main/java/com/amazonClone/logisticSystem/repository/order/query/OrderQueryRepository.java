@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface OrderQueryRepository {
 
-    public List<Order> findOrdersByEmail(String email);
+    public List<Order> findOrdersById(Long memberId);
 
 }

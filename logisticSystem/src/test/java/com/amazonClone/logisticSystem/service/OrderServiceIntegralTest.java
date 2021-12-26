@@ -4,8 +4,8 @@ package com.amazonClone.logisticSystem.service;
 import com.amazonClone.logisticSystem.domain.item.Item;
 import com.amazonClone.logisticSystem.domain.member.MemberRole;
 import com.amazonClone.logisticSystem.domain.util.Address;
-import com.amazonClone.logisticSystem.dto.member.request.SaveReqDto;
-import com.amazonClone.logisticSystem.dto.order.request.SaveOrderRequestDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveMemberReqDto;
+import com.amazonClone.logisticSystem.dto.order.request.SaveOrderReqDto;
 import com.amazonClone.logisticSystem.repository.item.JpaItemRepository;
 import com.amazonClone.logisticSystem.dto.order.response.FindOrdersResDto;
 import com.amazonClone.logisticSystem.service.member.MemberService;
@@ -15,11 +15,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Transactional
 @SpringBootTest
 public class OrderServiceIntegralTest {
 
@@ -52,13 +54,13 @@ public class OrderServiceIntegralTest {
         addresses.add(new Address("1", "2", "3"));
         addresses.add(new Address("4", "5", "6"));
 
-        SaveOrderRequestDto requestDto = SaveOrderRequestDto.builder() // a@a
+        SaveOrderReqDto requestDto = SaveOrderReqDto.builder() // a@a
                 .addresses(addresses)
                 .items(items)
                 .memberId(1L)
                 .build();
 
-        SaveOrderRequestDto requestDto2 = SaveOrderRequestDto.builder() // b@b
+        SaveOrderReqDto requestDto2 = SaveOrderReqDto.builder() // b@b
                 .addresses(addresses)
                 .items(items2)
                 .memberId(2L)
@@ -77,7 +79,7 @@ public class OrderServiceIntegralTest {
         //given
 
         //when
-        List<FindOrdersResDto> findOrders = orderService.findOrders("a@a");
+        List<FindOrdersResDto> findOrders = orderService.findOrders(1L);
 
         //then
         Assertions.assertThat(findOrders.get(0).getOrderItemName()).contains("사과", "배");
@@ -93,7 +95,7 @@ public class OrderServiceIntegralTest {
     }
 
     private void createMember(String email) {
-        SaveReqDto requestDto = SaveReqDto.builder()
+        SaveMemberReqDto requestDto = SaveMemberReqDto.builder()
                 .name("이명범")
                 .email(email)
                 .password("password")

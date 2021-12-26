@@ -18,12 +18,12 @@ public class OrderQueryRepositoryImpl implements OrderQueryRepository{
     private final QOrder order = new QOrder("order1");
 
     @Override
-    public List<Order> findOrdersByEmail(String email) {
+    public List<Order> findOrdersById(Long memberId) {
         return query
                 .select(order)
                 .from(order)
                 .join(order.member, member).fetchJoin()
-                .where(member.email.eq(email))
+                .where(member.id.eq(memberId))
                 .fetch();
     }
 }

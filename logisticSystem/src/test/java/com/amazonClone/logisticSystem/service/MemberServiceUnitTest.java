@@ -3,7 +3,7 @@ package com.amazonClone.logisticSystem.service;
 import com.amazonClone.logisticSystem.domain.member.Member;
 import com.amazonClone.logisticSystem.domain.member.MemberRole;
 import com.amazonClone.logisticSystem.domain.util.Address;
-import com.amazonClone.logisticSystem.dto.member.request.SaveReqDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveMemberReqDto;
 import com.amazonClone.logisticSystem.repository.member.JpaMemberRepository;
 import com.amazonClone.logisticSystem.service.member.MemberServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+
 @ExtendWith(MockitoExtension.class)
 public class MemberServiceUnitTest {
 
@@ -31,7 +32,7 @@ public class MemberServiceUnitTest {
     @Test
     public void 멤버_가입_테스트() throws Exception{
         //given
-        SaveReqDto requestDto = SaveReqDto.builder()
+        SaveMemberReqDto requestDto = SaveMemberReqDto.builder()
                 .name("이명범")
                 .email("email")
                 .password("password")
@@ -51,7 +52,7 @@ public class MemberServiceUnitTest {
     @Test
     public void 멤버_중복_테스트() throws Exception{
         //given
-        SaveReqDto requestDto = SaveReqDto.builder()
+        SaveMemberReqDto requestDto = SaveMemberReqDto.builder()
                 .name("이명범")
                 .email("email")
                 .password("password")

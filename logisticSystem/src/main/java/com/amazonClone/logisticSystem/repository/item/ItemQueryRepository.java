@@ -1,6 +1,6 @@
 package com.amazonClone.logisticSystem.repository.item;
 
-import com.amazonClone.logisticSystem.dto.Item.FindItemResDto;
+import com.amazonClone.logisticSystem.dto.Item.response.FindItemResDto;
 
 import java.util.List;
 

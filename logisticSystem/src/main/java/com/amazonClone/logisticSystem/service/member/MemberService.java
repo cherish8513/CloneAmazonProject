@@ -1,9 +1,9 @@
 package com.amazonClone.logisticSystem.service.member;
 
-import com.amazonClone.logisticSystem.dto.member.request.ChangeReqDto;
-import com.amazonClone.logisticSystem.dto.member.request.SaveReqDto;
+import com.amazonClone.logisticSystem.dto.member.request.ChangeMemberReqDto;
+import com.amazonClone.logisticSystem.dto.member.request.SaveMemberReqDto;
 
 public interface MemberService {
-    public Long join(SaveReqDto requestDto);
-    public Long changePassword(ChangeReqDto requestDto);
+    public Long join(SaveMemberReqDto requestDto);
+    public Long changePassword(ChangeMemberReqDto requestDto);
 }

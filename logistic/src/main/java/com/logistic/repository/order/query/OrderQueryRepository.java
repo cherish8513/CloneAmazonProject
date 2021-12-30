@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface OrderQueryRepository {
 
-    public List<Order> findOrdersById(Long memberId);
+    public List<Order> findAllOrdersById(Long memberId);
+    public List<Order> findBeforeDepOrdersById(Long memberId);
+    public List<Order> findOnWayOrdersById(Long memberId);
 
 }

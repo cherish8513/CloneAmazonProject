@@ -15,11 +15,12 @@ public class FindOrdersResDto {
     private int totalPrice;
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
-    private List<Address> addresses = new ArrayList<>();
+    private Address addresses;
 
 
-    public FindOrdersResDto() {
+    protected FindOrdersResDto() {
     }
+
 
     
     public FindOrdersResDto(Order order) {
@@ -27,6 +28,6 @@ public class FindOrdersResDto {
         order.getTotalPrice();
         orderDate = order.getCreatedDate();
         orderStatus = order.getStatus();
-        order.getDeliveries().stream().forEach(a -> addresses.add(a.getAddress()));
+        addresses = order.getDelivery().getAddress();
     }
 }

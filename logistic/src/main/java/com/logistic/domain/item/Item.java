@@ -4,6 +4,7 @@ import com.logistic.domain.categoryItem.CategoryItem;
 import com.logistic.domain.member.Member;
 import com.logistic.domain.util.Address;
 import com.logistic.domain.util.BaseTimeEntity;
+import com.logistic.exception.NotEnoughStockException;
 import com.querydsl.core.annotations.QueryEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -80,5 +81,16 @@ public class Item extends BaseTimeEntity {
 
     public void addStockCount(int count) {
         stockQuantity += count;
+    }
+
+    /**
+     * stock 감소
+     */
+    public void removeStock(int quantity){
+        int restStock = this.stockQuantity - quantity;
+        if(restStock < 0) {
+            throw new NotEnoughStockException("재고량이 부족합니다.");
+        }
+        this.stockQuantity = restStock;
     }
 }

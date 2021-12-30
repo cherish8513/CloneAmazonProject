@@ -33,8 +33,9 @@ public class Order extends BaseTimeEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<Delivery> deliveries = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -45,17 +46,20 @@ public class Order extends BaseTimeEntity {
         changeStatus(OrderStatus.BEFORE_RECEPTION);
     }
 
+    public void changeDelivery(Delivery delivery){
+        this.delivery = delivery;
+    }
+
     public void changeStatus(OrderStatus status){
         this.status = status;
     }
 
     public void cancel(){
-        for (Delivery delivery: deliveries) {
-            if(delivery.getStatus() == DeliveryStatus.COMPLETE){
-                throw new IllegalStateException("이미 배송이 완료된 상품은 취소가 불가능합니다.");
-            }
+        if(delivery.getStatus() == DeliveryStatus.COMPLETE){
+            throw new IllegalStateException("이미 배송이 완료된 상품은 취소가 불가능합니다.");
         }
         changeStatus(OrderStatus.CANCEL);
+        delivery.changeStatus(DeliveryStatus.CANCEL);
         for(OrderItem orderItem: orderItems){
             orderItem.cancel();
         }

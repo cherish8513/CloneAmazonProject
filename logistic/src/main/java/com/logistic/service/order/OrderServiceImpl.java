@@ -6,6 +6,7 @@ import com.logistic.domain.item.Item;
 import com.logistic.domain.member.Member;
 import com.logistic.domain.order.Order;
 import com.logistic.domain.orderItem.OrderItem;
+import com.logistic.domain.util.Address;
 import com.logistic.dto.order.request.SaveOrderReqDto;
 import com.logistic.dto.order.response.FindOrdersResDto;
 import com.logistic.repository.item.JpaItemRepository;
@@ -34,40 +35,43 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Long order(SaveOrderReqDto requestDto) {
+    public void order(List<SaveOrderReqDto> requestDto) {
         //회원 조회
-        Member member = validationCheck.getMember(memberRepository.findById(requestDto.getMemberId()));
+        Member member = validationCheck.getMember(memberRepository.findById(requestDto.get(0).getMemberId()));
 
-        //주문 생성
-        Order order = new Order(member);
+        for (SaveOrderReqDto reqDto :requestDto) {
 
-        //주문 상품 생성
-        List<OrderItem> orderItems = new ArrayList<>();
+            //주문 생성
+            Order order = new Order(member);
 
-        HashMap<Long, Integer> items = requestDto.getItems();
-        if (items != null) {
-            for (Long itemId : items.keySet()) {
-                Item item = validationCheck.getItem(itemRepository.findById(itemId));
-                int count = items.get(itemId);
-                orderItems.add(OrderItem.builder()
-                        .order(order)
-                        .item(item)
-                        .count(count)
-                        .build());
+            //주문 상품 생성
+            List<OrderItem> orderItems = new ArrayList<>();
+
+            HashMap<Long, Integer> items = reqDto.getItems();
+            if (items != null) {
+                for (Long itemId : items.keySet()) {
+                    Item item = validationCheck.getItem(itemRepository.findById(itemId));
+                    int count = items.get(itemId);
+                    item.removeStock(count);
+                    orderItems.add(OrderItem.builder()
+                            .order(order)
+                            .item(item)
+                            .count(count)
+                            .build());
+                }
             }
+
+            //배송지 생성
+            Delivery.builder()
+                    .order(order)
+                    .address(reqDto.getAddresses())
+                    .build();
+
+
+            //주문 저장
+            Order saveOrder = orderRepository.save(order);
+
         }
-
-        //배송지 생성
-        List<Delivery> deliveries = new ArrayList<>();
-        requestDto.getAddresses().stream().forEach(address -> deliveries.add(Delivery.builder()
-                .order(order)
-                .address(address)
-                .build()));
-
-        //주문 저장
-        Order saveOrder = orderRepository.save(order);
-
-        return saveOrder.getId();
     }
   
     @Override
@@ -79,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
     @Retry
     @Override
     public List<FindOrdersResDto> findOrders(Long memberId) {
-        List<Order> findOrders = orderQueryRepository.findOrdersById(memberId);
+        List<Order> findOrders = orderQueryRepository.findAllOrdersById(memberId);
         List<FindOrdersResDto> resDtoList = new ArrayList<>();
         for (Order findOrder : findOrders) {
             resDtoList.add(new FindOrdersResDto(findOrder));

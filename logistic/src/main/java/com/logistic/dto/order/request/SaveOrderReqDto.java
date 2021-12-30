@@ -14,10 +14,10 @@ public class SaveOrderReqDto {
 
     public Long memberId;
     public HashMap<Long, Integer> items;
-    public List<Address> addresses;
+    public Address addresses;
 
     @Builder
-    public SaveOrderReqDto(Long memberId, HashMap<Long, Integer> items, List<Address> addresses) {
+    public SaveOrderReqDto(Long memberId, HashMap<Long, Integer> items, Address addresses) {
         this.memberId = memberId;
         this.items = items;
         this.addresses = addresses;

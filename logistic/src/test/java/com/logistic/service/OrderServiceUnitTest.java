@@ -63,15 +63,15 @@ public class OrderServiceUnitTest {
         items.put(1L, 30);
         items.put(2L, 10);
 
-        List<Address> addresses = new ArrayList<>();
-        addresses.add(new Address("1", "2", "3"));
-        addresses.add(new Address("4", "5", "6"));
+        Address addresses = new Address("1", "2", "3");
 
         SaveOrderReqDto requestDto = SaveOrderReqDto.builder()
                 .addresses(addresses)
                 .items(items)
                 .memberId(1L)
                 .build();
+        List<SaveOrderReqDto> listRequestDto = new ArrayList<>();
+        listRequestDto.add(requestDto);
 
         when(memberRepository.findById(requestDto.getMemberId())).thenReturn(Optional.of(member));
         when(itemRepository.findById(1L)).thenReturn(Optional.of(item1));
@@ -82,7 +82,7 @@ public class OrderServiceUnitTest {
         when(validationCheck.getItem(Optional.of(item2))).thenReturn(item2);
 
         //when
-        Long orderId = orderService.order(requestDto);
+        orderService.order(listRequestDto);
 
         //then
         verify(memberRepository, times(1)).findById(any(Long.class));

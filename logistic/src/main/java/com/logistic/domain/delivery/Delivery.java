@@ -23,8 +23,7 @@ public class Delivery extends BaseTimeEntity {
     @Column(name = "delivery_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
     Order order;
 
     @Embedded
@@ -47,6 +46,10 @@ public class Delivery extends BaseTimeEntity {
 
     public void changeOrder(Order order) {
         this.order = order;
-        order.getDeliveries().add(this);
+        order.changeDelivery(this);
+    }
+
+    public void changeStatus(DeliveryStatus status){
+        this.status = status;
     }
 }

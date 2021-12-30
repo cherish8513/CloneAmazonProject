@@ -18,8 +18,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public Long createOrder(@RequestBody SaveOrderReqDto reqDto){
-        return orderService.order(reqDto);
+    public void createOrder(@RequestBody List<SaveOrderReqDto> reqDto){
+        orderService.order(reqDto);
     }
 
     @DeleteMapping

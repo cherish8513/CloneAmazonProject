@@ -27,7 +27,7 @@ public class QOrder extends EntityPathBase<Order> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdDate = _super.createdDate;
 
-    public final ListPath<com.logistic.domain.delivery.Delivery, com.logistic.domain.delivery.QDelivery> deliveries = this.<com.logistic.domain.delivery.Delivery, com.logistic.domain.delivery.QDelivery>createList("deliveries", com.logistic.domain.delivery.Delivery.class, com.logistic.domain.delivery.QDelivery.class, PathInits.DIRECT2);
+    public final com.logistic.domain.delivery.QDelivery delivery;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -60,6 +60,7 @@ public class QOrder extends EntityPathBase<Order> {
 
     public QOrder(Class<? extends Order> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.delivery = inits.isInitialized("delivery") ? new com.logistic.domain.delivery.QDelivery(forProperty("delivery"), inits.get("delivery")) : null;
         this.member = inits.isInitialized("member") ? new com.logistic.domain.member.QMember(forProperty("member")) : null;
     }
 
